@@ -40,6 +40,9 @@
     <string name="enjoy_egypt">Enjoy Egypt</string>
     <string name="take_me">Take me there</string>
     <string name="preview">Previews</string>
+    <string name="sights">Sights</string>
+    <string name="contents">Contents</string>
+    <string name="comment">Comment</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

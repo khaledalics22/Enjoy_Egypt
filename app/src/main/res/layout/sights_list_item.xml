@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="3dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardBackgroundColor="@color/gray_light"
+        card_view:contentPadding="3dp"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+    <ImageView
+    android:id="@+id/iv_sights"
+    android:layout_width="200dp"
+    android:layout_height="170dp"
+    android:src="@drawable/m1"
+    android:layout_margin="7dp"
+    android:scaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/tv_sight_name_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name_of_place"
+        android:textSize="24sp"
+        android:layout_alignStart="@id/iv_sights"
+        android:layout_alignLeft="@id/iv_sights"
+        android:layout_alignBottom="@id/iv_sights"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:background="@color/gray_light_pure"/>
+    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

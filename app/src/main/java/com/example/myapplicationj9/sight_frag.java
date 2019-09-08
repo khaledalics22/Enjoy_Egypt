@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,10 +15,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class detail_frag extends Fragment {
+public class sight_frag extends Fragment {
 
 
-    public detail_frag() {
+    public sight_frag() {
         // Required empty public constructor
     }
 
@@ -32,11 +31,7 @@ public class detail_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_frag, container, false);
+        return inflater.inflate(R.layout.sight_frag, container, false);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 }

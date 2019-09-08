@@ -1,17 +1,10 @@
 package com.example.myapplicationj9;
 
-import android.util.ArraySet;
-import android.widget.Button;
-import android.widget.ImageView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class City {
     private String name;
-    private ArrayList<String> sights;
+    private ArrayList<Sight> sights;
     private int distance;
     private int ImageSrcID;
     private String distanceUnit;
@@ -26,7 +19,7 @@ public class City {
         Details = details;
     }
 
-    public City(String name, ArrayList<String> sights, int distance, String distanceUnit, int imageSrcID,  ArrayList<Comment> comments, String details,ArrayList<String> rate) {
+    public City(String name, ArrayList<Sight> sights, int distance, String distanceUnit, int imageSrcID, ArrayList<Comment> comments, String details, ArrayList<String> rate) {
         this.name = name;
         this.sights = sights;
         this.distance = distance;
@@ -36,7 +29,7 @@ public class City {
         Details = details;
         Rate=rate;
     }
-    public City(String name, ArrayList<String> sights, int distance, String distanceUnit, int imageSrcID,  ArrayList<Comment> comments, String details) {
+    public City(String name, ArrayList<Sight> sights, int distance, String distanceUnit, int imageSrcID, ArrayList<Comment> comments, String details) {
         this.name = name;
         this.sights = sights;
         this.distance = distance;
@@ -81,7 +74,7 @@ public class City {
     }
 
 
-    public City(String name,ArrayList<String> sights, int distance,String distanceUnit, int imageSrcID) {
+    public City(String name, ArrayList<Sight> sights, int distance, String distanceUnit, int imageSrcID) {
         this.name = name;
         this.sights = sights;
         this.distance = distance;
@@ -107,7 +100,7 @@ public class City {
 
     public City() {
        name = "none"  ;
-       sights=new ArrayList<String>();
+       sights=new ArrayList<Sight>();
        distance=-1;
     }
 
@@ -115,7 +108,7 @@ public class City {
         return name;
     }
 
-    public ArrayList<String> getSights() {
+    public ArrayList<Sight> getSights() {
         return sights;
     }
 
@@ -127,7 +120,7 @@ public class City {
         this.name = name;
     }
 
-    public void setSights(ArrayList<String> sights) {
+    public void setSights(ArrayList<Sight> sights) {
         this.sights = sights;
     }
 

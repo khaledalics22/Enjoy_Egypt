@@ -6,13 +6,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:id="@+id/detail_frag"
+        android:id="@+id/sight_frag"
         android:layout_height="wrap_content"
         tools:context=".detail_frag">
 
         <!-- TODO: Update blank fragment layout -->
         <ImageView
-            android:id="@+id/iv_city_image"
+            android:id="@+id/iv_sight_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -22,20 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="City name"
-            android:textSize="24sp"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            />
+            <TextView
+                android:id="@+id/tv_sight_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sight Name"
+                android:textSize="24sp"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                />
             <ImageView
-                android:id="@+id/star_5"
+                android:id="@+id/star_5_sight"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/star_holo"
@@ -44,39 +44,39 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"/>
             <ImageView
-                android:id="@+id/star_4"
+                android:id="@+id/star_4_sight"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/star_holo"
-                android:layout_toLeftOf="@id/star_5"
-                android:layout_toStartOf="@id/star_5"
+                android:layout_toLeftOf="@id/star_5_sight"
+                android:layout_toStartOf="@id/star_5_sight"
                 android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"/>
             <ImageView
-                android:id="@+id/star_3"
+                android:id="@+id/star_3_sight"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/star_holo"
-                android:layout_toLeftOf="@id/star_4"
-                android:layout_toStartOf="@id/star_4"
+                android:layout_toLeftOf="@id/star_4_sight"
+                android:layout_toStartOf="@id/star_4_sight"
                 android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"/>
             <ImageView
-                android:id="@+id/star_2"
+                android:id="@+id/star_2_sight"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/star_holo"
-                android:layout_toLeftOf="@id/star_3"
-                android:layout_toStartOf="@id/star_3"
+                android:layout_toLeftOf="@id/star_3_sight"
+                android:layout_toStartOf="@id/star_3_sight"
                 android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"/>
             <ImageView
-                android:id="@+id/star_1"
+                android:id="@+id/star_1_sight"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/star_holo"
-                android:layout_toLeftOf="@id/star_2"
-                android:layout_toStartOf="@id/star_2"
+                android:layout_toLeftOf="@id/star_2_sight"
+                android:layout_toStartOf="@id/star_2_sight"
                 android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"/>
 
@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sights"
+            android:text="@string/contents"
             android:layout_margin="5dp"
             android:textStyle="bold"
             android:textSize="18sp"/>
@@ -96,7 +96,7 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_view_sight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
@@ -112,7 +112,7 @@
             android:layout_margin="10dp"
             android:text="@string/details"/>
         <TextView
-            android:id="@+id/tv_city_details"
+            android:id="@+id/tv_sight_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="5"
@@ -128,10 +128,10 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray_light"
-          />
+            />
 
         <ImageView
-            android:id="@+id/show_less"
+            android:id="@+id/show_less_sight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -147,7 +147,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:textColor="@android:color/white"
             android:text="@string/take_me"
-            android:id="@+id/btn_take_me_there"
+            android:id="@+id/btn_take_me_there_sight"
             android:textSize="24sp"/>
         <View
             android:layout_width="match_parent"
@@ -163,9 +163,30 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view_comment"
+            android:id="@+id/recycle_view_comment_sight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-              />
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/comment"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
+                android:textColorHint="@android:color/darker_gray"
+             />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_menu_send"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"/>
+        </RelativeLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

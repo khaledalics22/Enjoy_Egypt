@@ -27,23 +27,38 @@ public class list_fragment extends ListFragment {
     private listItem activity;
     public  interface listItem{
         void onItemSelected(int index);
-        void showBackArrow();
+
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity=(listItem)context;
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ArrayList<Comment> comments=new ArrayList<Comment>();
-        ArrayList<String> sights=new ArrayList<String>();
-        sights.add("Cairo Tower");
-        sights.add("bla bla");
+        ArrayList<Sight> sights=new ArrayList<Sight>();
+        ArrayList<Content> contents=new ArrayList<Content>();
+        contents.add(new Content("el shrouq hotel bla bla","five star hotel bla bla","no cordinates",R.drawable.ic_menu_slideshow));
+
+        sights.add(new Sight("Cairo Tower","tall tower sadflsdnaffsf;sdafsda;fsdalfsdbldsf;jnasdbdsa;sd","no cordinates",R.drawable.m1,contents));
+        sights.add(new Sight("river","amazing river  sdafl;ndsaf;lhvbesfdaohi;adsflkbnefasdoihzl;afsdhibk;dsa","no cordinates",R.drawable.m2));
+        sights.add(new Sight(" bla bla","bla bla asdfafdsvn[puwadsopibewadsloewi[u9adsgvjhjodaif9suihewopafdhewiafdshew","no cordinates",R.drawable.m4));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m1));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m4));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m2));
+
         comments.add(new Comment("ahmed","this city is amazing" ));
+        comments.add(new Comment("khaled","this city is amazing" ));
+        comments.add(new Comment("asmaa","this city is amazing" ));
+        comments.add(new Comment("khaled","this city is amazing" ));
+        comments.add(new Comment("ahmed","this city is amazing" ));
+        comments.add(new Comment("asmaa","this city is amazing" ));
+
         cities=new ArrayList<City>();
         cities.add(new City("Cairo",
                 sights,
@@ -60,7 +75,12 @@ public class list_fragment extends ListFragment {
                 "asld;fjadslfja;dsl'jfsdlak;fjsa" +
                 "asdlfkjsdhflasdf;lds" +
                 "asfdh;khsd;fsladk;fhsdafadsk" +
-                "sadf;hdsihoiekdsifjllasdofla"));
+                "sadf;hdsihoiekdsifjll" +
+                "la;sdfsadljfsadl;fjasdl" +
+                "sioadf;jadslj;f[asdjfjlads;llf" +
+                "psadfjeiaosufekadsf asdi[fewioaps" +
+                "poiesfujewj;aflsdp[fesdoplesaop" +
+                "aepfioeparosd9[fopneasd9poasdofla"));
 
 
         cities.add(new City("Giza",sights,3,"km",R.drawable.m2));

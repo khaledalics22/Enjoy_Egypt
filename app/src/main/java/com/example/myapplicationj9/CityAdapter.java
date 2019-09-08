@@ -30,7 +30,7 @@ public class CityAdapter extends ArrayAdapter<City> {
             convertView= LayoutInflater.from(getContext()).inflate(R.layout.list_item_city,parent,false);
         }
         ImageView imageView=convertView.findViewById(R.id.iv_list_item);
-        TextView  cityName=convertView.findViewById(R.id.tv_city_name);
+        TextView  cityName=convertView.findViewById(R.id.tv_city_name_list);
         TextView  distance=convertView.findViewById(R.id.tv_distance);
         TextView  distanceUnit=convertView.findViewById(R.id.tv_distance_unit);
         TextView  sights=convertView.findViewById(R.id.tv_famous_places);
@@ -40,10 +40,10 @@ public class CityAdapter extends ArrayAdapter<City> {
         cityName.setText(currCity.getName());
         distance.setText(""+currCity.getDistance());
         distanceUnit.setText(currCity.getDistanceUnit());
-        ArrayList<String> sightsArray=currCity.getSights();
+        ArrayList<Sight> sightsArray=currCity.getSights();
         String sightsString="";
         for(int i=0; i<3&&i<sightsArray.size();i++) {
-            sightsString+=sightsArray.get(i)+" ,";
+            sightsString+=sightsArray.get(i).getName()+" ,";
         }
         sights.setText(sightsString);
         return convertView;
