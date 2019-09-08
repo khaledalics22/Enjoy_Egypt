@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/detail_frag"
+        android:layout_height="wrap_content"
+        tools:context=".detail_frag">
+
+        <!-- TODO: Update blank fragment layout -->
+        <ImageView
+            android:id="@+id/iv_city_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:src="@drawable/m2" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City name"
+            android:textSize="24sp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            />
+            <ImageView
+                android:id="@+id/star_5"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/star_holo"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"/>
+            <ImageView
+                android:id="@+id/star_4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/star_holo"
+                android:layout_toLeftOf="@id/star_5"
+                android:layout_toStartOf="@id/star_5"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"/>
+            <ImageView
+                android:id="@+id/star_3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/star_holo"
+                android:layout_toLeftOf="@id/star_4"
+                android:layout_toStartOf="@id/star_4"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"/>
+            <ImageView
+                android:id="@+id/star_2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/star_holo"
+                android:layout_toLeftOf="@id/star_3"
+                android:layout_toStartOf="@id/star_3"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"/>
+            <ImageView
+                android:id="@+id/star_1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/star_holo"
+                android:layout_toLeftOf="@id/star_2"
+                android:layout_toStartOf="@id/star_2"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"/>
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/tv_city_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="8dp"
+            android:text="details \nsldfld
+        s;dsl;sdadsfsddfgdsfgdfgsadgdfsgds
+        fgdsfsdfhgfhdfsgdfdfsgdgsdfgsdfgsfhgf
+        hafgdsgdsfgfhadfh\sfgfdgsdffhgfdsgsdfhf
+        sgdafsdafdsagasdgdfgsdaffadsfadsasdfasfj;ads
+        lk;jfsdl;kjfdsakfhdflfk;ds;g;dkljdsal;h;fldsssdk
+        ;jfla;ksjfdjlkjfdslfjsdklafjfdsakl;fjdasljflksda
+        jffladsdfl;sasldkjf a;dskljfjadskl;fjsad;das flads
+        'fjldsfhdfjgjsdafrrei;fjeodsigardshgoierlhgndoas;lf
+         fgdsfsdfhgfhdfsgdfdfsgdgsdfgsdfgsfhgf
+        hafgdsgdsfgfhadfh\sfgfdgsdffhgfdsgsdfhf
+        sgdafsdafdsagasdgdfgsdaffadsfadsasdfasfj;ads
+        lk;jfsdl;kjfdsakfhdflfk;ds;g;dkljdsal;h;fldsssdk
+        ;jfla;ksjfdjlkjfdslfjsdklafjfdsakl;fjdasljflksda
+        jffladsdfl;sasldkjf a;dskljfjadskl;fjsad;das flads
+        'fjldsfhdfjgjsdafrrei;fjeodsigardshgoierlhgndoas;lf
+        fgdsfsdfhgfhdfsgdfdfsgdgsdfgsdfgsfhgf
+        hafgdsgdsfgfhadfh\sfgfdgsdffhgfdsgsdfhf
+        sgdafsdafdsagasdgdfgsdaffadsfadsasdfasfj;ads
+        lk;jfsdl;kjfdsakfhdflfk;ds;g;dkljdsal;h;fldsssdk
+        ;jfla;ksjfdjlkjfdslfjsdklafjfdsakl;fjdasljflksda
+        jffladsdfl;sasldkjf a;dskljfjadskl;fjsad;das flads
+        'fjldsfhdfjgjsdafrrei;fjeodsigardshgoierlhgndoas;lf
+        jdsanxcfjoiae;rlfdsiufe"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light"
+          />
+
+        <ImageView
+            android:id="@+id/show_less"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_"
+            android:layout_margin="@dimen/fab_margin"
+            android:textColor="@android:color/white"
+            android:text="@string/take_me"
+            android:id="@+id/btn_take_me_there"
+            android:textSize="24sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light"
+            android:layout_margin="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preview"
+            android:textSize="24sp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"/>
+        <ListView
+            android:id="@+id/lv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+              />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

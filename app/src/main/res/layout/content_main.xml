@@ -20,7 +20,6 @@
         />
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
@@ -60,6 +59,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_light"
+                android:layout_margin="8dp"/>
             <TextView
                 android:hint="@string/caption"
                 android:layout_width="match_parent"
@@ -84,6 +88,11 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20dp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_light"
+                android:layout_margin="8dp"/>
             <TextView
                 android:hint="@string/caption"
                 android:layout_width="match_parent"
@@ -109,6 +118,11 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20dp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_light"
+                android:layout_margin="8dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -136,7 +150,11 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20dp"
                 />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_light"
+                android:layout_margin="8dp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
