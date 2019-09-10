@@ -2,9 +2,17 @@ package com.example.myapplicationj9;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+
+import com.example.myapplicationj9.Data.Contract;
+import com.example.myapplicationj9.Data.NetworkData;
+import com.example.myapplicationj9.Data.SharedPrefrance;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -15,6 +23,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.FragmentManager;
+import androidx.loader.content.AsyncTaskLoader;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -42,6 +51,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////Data Part
+        SharedPreferences sharedPreferences=getSharedPreferences(Contract.SharedPrefrances,MODE_PRIVATE);
+        SharedPrefrance sharedPrefrance = new SharedPrefrance(sharedPreferences);
+        boolean FirstTime = sharedPrefrance.isFirstTime();
+        if(isNetworkAvailable(this))
+        {
+            if (FirstTime)
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+        else
+        {
+            if (FirstTime)
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+        new DataAsyncTask().execute();
+
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////Data part
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -115,5 +162,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem item= navigationView.getCheckedItem();
         if(item!=null)
             item.setChecked(false);
+    }
+    ////////////data Part
+
+
+    class DataAsyncTask extends AsyncTask <Void,Void,Void>
+    {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new NetworkData(getContentResolver()).getData();
+            return null;
+        }
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        //boolean function to check the internet connection
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

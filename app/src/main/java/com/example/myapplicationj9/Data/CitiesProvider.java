@@ -3,6 +3,7 @@ package com.example.myapplicationj9.Data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -80,7 +81,15 @@ public class CitiesProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+        sql =db.getWritableDatabase();
+        match = uriMatcher.match(uri);
+        switch (match) {
+            case Table_Cities:
+            sql.insert(Contract.Table_Cities_Name, null, contentValues);
+            return null;
+            default:
+                throw new IllegalArgumentException("Cannot query UNKNOWN URI "+uri);
+        }
     }
 
     @Override

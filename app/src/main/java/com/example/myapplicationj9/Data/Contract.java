@@ -1,10 +1,16 @@
 package com.example.myapplicationj9.Data;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
 
 public class Contract implements BaseColumns {
+    public static final String SharedPrefrances = "MySharedPreference";
+    public static final String Language = "Language";
+    public static final String Language_En = "English";
+    public static final String Language_Ar = "Arabic";
+    public static final String FirstTime = "FirstTime";
     public static final String Table_Cities_Name = "Cities";
     public static final String Table_Info_Name = "Info";
     public static final String Column_Photo_Cities = "photo";
