@@ -33,6 +33,7 @@ public class detail_frag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail_frag, container, false);
+
     }
 
     @Override

@@ -35,12 +35,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,MainAdapter.openDetailOfSight {
+
+    ArrayList<City> cities;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    MainAdapter adapter;
 
     private AppBarConfiguration mAppBarConfiguration;
     NavigationView navigationView ;
@@ -110,11 +118,80 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem item= navigationView.getCheckedItem();
         if(item!=null)
             item.setChecked(false);
+
+
+        ///////////////////////////////////////////////////////////////////////////
+
+        ArrayList<Comment> comments=new ArrayList<Comment>();
+        ArrayList<Sight> sights=new ArrayList<Sight>();
+        cities=new ArrayList<City>();
+        ArrayList<Content> contents=new ArrayList<Content>();
+        contents.add(new Content("el shrouq hotel bla bla","five star hotel bla bla","no cordinates",R.drawable.ic_menu_slideshow));
+
+        sights.add(new Sight("Cairo Tower","tall tower sadflsdnaffsf;sdafsda;fsdalfsdbldsf;jnasdbdsa;sd","no cordinates",R.drawable.m1,contents));
+        sights.add(new Sight("river","amazing river  sdafl;ndsaf;lhvbesfdaohi;adsflkbnefasdoihzl;afsdhibk;dsa","no cordinates",R.drawable.m2));
+        sights.add(new Sight(" bla bla","bla bla asdfafdsvn[puwadsopibewadsloewi[u9adsgvjhjodaif9suihewopafdhewiafdshew","no cordinates",R.drawable.m4));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m1));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m4));
+        sights.add(new Sight("Cairo Tower","tall tower","no cordinates",R.drawable.m2));
+
+        comments.add(new Comment("ahmed","this city is amazing" ));
+        comments.add(new Comment("khaled","this city is amazing" ));
+        comments.add(new Comment("asmaa","this city is amazing" ));
+        comments.add(new Comment("khaled","this city is amazing" ));
+        comments.add(new Comment("ahmed","this city is amazing" ));
+        comments.add(new Comment("asmaa","this city is amazing" ));
+
+        cities=new ArrayList<City>();
+        cities.add(new City("Cairo",
+                sights,
+                3,
+                "km",
+                R.drawable.m1
+                ,comments
+                , "cairo hase a lot of things"+
+                "bla bla  sdlfjsdl;fosdfhlsdj" +
+                "alsdfdsl;jfdsfslda" +
+                ";sdlfjsdlaf;slad" +
+                "sadlfjds;lfj;asdjlfdskf;" +
+                "asdlfj;dsf;jsadjfldasldfsdlaf" +
+                "asld;fjadslfja;dsl'jfsdlak;fjsa" +
+                "asdlfkjsdhflasdf;lds" +
+                "asfdh;khsd;fsladk;fhsdafadsk" +
+                "sadf;hdsihoiekdsifjll" +
+                "la;sdfsadljfsadl;fjasdl" +
+                "sioadf;jadslj;f[asdjfjlads;llf" +
+                "psadfjeiaosufekadsf asdi[fewioaps" +
+                "poiesfujewj;aflsdp[fesdoplesaop" +
+                "aepfioeparosd9[fopneasd9poasdofla"));
+
+
+        cities.add(new City("Giza",sights,3,"km",R.drawable.m2));
+        cities.add(new City("whatever else",sights,3,"km",R.drawable.m3));
+        cities.add(new City("Cairo",sights,3,"km",R.drawable.m4));
+        cities.add(new City("Giza",sights,3,"km",R.drawable.m1));
+        cities.add(new City("whatever else",sights,3,"km",R.drawable.m2));
+        cities.add(new City("Cairo",sights,3,"km",R.drawable.m3));
+        cities.add(new City("Giza",sights,3,"km",R.drawable.m4));
+        cities.add(new City("whatever else",sights,3,"km",R.drawable.m1));
+
+        recyclerView=findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter=new MainAdapter(this,cities.get(0).getSights());
+        recyclerView.setAdapter(adapter);
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
        //NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    @Override
+    public void openDetailsListener(Sight sight) {
+
+       // open the frag of sights
+
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
