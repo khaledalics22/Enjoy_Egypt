@@ -20,7 +20,7 @@ public class sightsAdapter  extends RecyclerView.Adapter<sightsAdapter.ViewHolde
     }
     public sightsAdapter(Context context, ArrayList<Sight> sights) {
         if(sights!=null)
-              this.sights = sights;
+            this.sights = sights;
         else
             sights=new ArrayList<Sight>();
         activity=(SightSelected)context;
@@ -38,6 +38,7 @@ public class sightsAdapter  extends RecyclerView.Adapter<sightsAdapter.ViewHolde
                 @Override
                 public void onClick(View view) {
                     activity.onSightSelectedItem((Sight)view.getTag());
+
                 }
             });
 
