@@ -48,20 +48,28 @@ public class CitiesProvider extends ContentProvider {
             case Row_Cities :
                 try {
                     String name = uri.getLastPathSegment();
-                    Log.i("Ahmed", name);
+                    Log.i("Ahmed", name +" query");
                     selection = Contract.Column_Name_Cities_En + "=?";
                     selectionArgs = new String[] {name};
                     return sql.query(Contract.Table_Cities_Name,projection,selection,selectionArgs,null,null,null);
                 }
                 catch (Exception e)
                  {
-                 Log.i("Ahmed",e.getMessage());
+                    Log.i("Ahmed",e.getMessage());
                  }
 
 
             case Row_Info :
 
             case Table_Cities :
+                try {
+                    Log.i("Ahmed", "Table query");
+                    return sql.query(Contract.Table_Cities_Name,null,null,null,null,null,null);
+                }
+                catch (Exception e)
+                {
+                    Log.i("Ahmed",e.getMessage());
+                }
 
             case Table_Info :
 
@@ -85,8 +93,9 @@ public class CitiesProvider extends ContentProvider {
         match = uriMatcher.match(uri);
         switch (match) {
             case Table_Cities:
-            sql.insert(Contract.Table_Cities_Name, null, contentValues);
-            return null;
+                Log.i("Ahmed","Table Insert");
+                sql.insert(Contract.Table_Cities_Name, null, contentValues);
+                return null;
             default:
                 throw new IllegalArgumentException("Cannot query UNKNOWN URI "+uri);
         }
