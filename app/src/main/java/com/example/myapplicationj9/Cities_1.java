@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -60,7 +62,6 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
                 .show(manager.findFragmentById(R.id.list_frag))
                 .hide(manager.findFragmentById(R.id.detail_frag))
                 .hide(manager.findFragmentById(R.id.sight_frag))
-                .addToBackStack(null)
                 .commit();
 
     }
@@ -106,6 +107,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
         }
         return true ;
     }
+
 
     public void onSightSelectedItem(Sight sight) {
         sightIndex=list_fragment.cities.get(cityIndex).getSights().indexOf(sight);
