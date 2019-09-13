@@ -24,8 +24,25 @@
                 >
             </SearchView>
         </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/tvDemo"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/bright_black"
+            android:text="Type Of Tourism"
+            android:textColor="@color/gray_light"
+
+            />
+
+        <Spinner
+            android:id="@+id/tySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvDemo"
+            android:background="@color/bright_black"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/activity_main2"/>
+    <include layout="@layout/activity_main2"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

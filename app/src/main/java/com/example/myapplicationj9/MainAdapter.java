@@ -48,6 +48,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
 
         }
+  void openDetailsListener(Sight s)
+  {
+
+
+  }
     }
 
     @NonNull
@@ -56,16 +61,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         View v=LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item,parent,false);
 
+
+
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Sight currSight= sights.get(position);
-            holder.itemView.setTag(currSight);
-            holder.caption.setText(currSight.getDetails());
-            holder.iv_sight_image.setImageResource(currSight.getImageSrcId());
-            holder.sightName.setText(currSight.getName());
+        Sight currSight= sights.get(position);
+        holder.itemView.setTag(currSight);
+        holder.caption.setText(currSight.getDetails());
+        holder.iv_sight_image.setImageResource(currSight.getImageSrcId());
+        holder.sightName.setText(currSight.getName());
     }
 
     @Override

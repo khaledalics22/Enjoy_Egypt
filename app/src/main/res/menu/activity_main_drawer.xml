@@ -17,10 +17,7 @@
             android:id="@+id/near"
             android:icon="@drawable/ic_directions_walk_black_24dp"
             android:title="@string/nearest_cities" />
-        <item
-            android:id="@+id/type"
-            android:icon="@drawable/ic_explore_black_24dp"
-            android:title="@string/type_of_tourism"/>
+
     </group>
 
     <item android:title="Communicate">

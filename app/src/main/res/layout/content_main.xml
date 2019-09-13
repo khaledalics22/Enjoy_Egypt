@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation"
         />
-
+<!--
     <ScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -157,4 +157,5 @@
                 android:layout_margin="8dp"/>
         </LinearLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    !-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
