@@ -16,7 +16,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + Contract.Column_Name_Cities_En + " TEXT," + Contract.Column_Photo_Cities + " TEXT," +
             Contract.Column_Info_Cities_En + " TEXT ," + Contract.Column_Name_Cities_Ar + " TEXT,"  +
             Contract.Column_Info_Cities_Ar + " TEXT)";
+    private static final String Create_Method_Monuments = "CREATE TABLE " + Contract.Table_Monuments_Name + "("
+            + Contract.Column_Name_Monuments_En + " TEXT," + Contract.Column_Photo_Monuments + " TEXT," +
+            Contract.Column_Info_Monuments_En + " TEXT ," + Contract.Column_Name_Monuments_Ar + " TEXT,"  +
+            Contract.Column_Prize_Ar_Monuments + " TEXT,"  + Contract.Column_Prize_En_Monuments + " TEXT,"  +
+            Contract.Column_City_Name_Monuments + " TEXT,"  +
+            Contract.Column_Info_Monuments_Ar + " TEXT)";
     private static final String Drop_Table_Cities ="DROP IF EXISTS " +Contract.Table_Cities_Name ;
+    private static final String Drop_Table_Monuments ="DROP IF EXISTS " +Contract.Table_Monuments_Name ;
 
     public DatabaseHelper(Context context ) {
         super(context, Database_Name, null, 1);
@@ -26,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(Create_Method_Cities);
+        sqLiteDatabase.execSQL(Create_Method_Monuments);
     }
 
     @Override

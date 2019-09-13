@@ -1,10 +1,14 @@
 package com.example.myapplicationj9;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,9 +42,11 @@ import android.widget.Toast;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -59,10 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     MainAdapter adapter;
+    Bitmap bitmap;
 
     private AppBarConfiguration mAppBarConfiguration;
     NavigationView navigationView ;
-    boolean FirstTime;
+    static boolean FirstTime;
+    Cursor data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,23 +82,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             SharedPreferences sharedPreferences = getSharedPreferences(Contract.SharedPrefrances, MODE_PRIVATE);
             SharedPrefrance sharedPrefrance = new SharedPrefrance(sharedPreferences);
-            Cursor data=null;
+            Cursor data = null;
             String Language;
             FirstTime = sharedPrefrance.isFirstTime();
             Language = sharedPrefrance.getLanguage();
-            //if (FirstTime) {
-            //    if (isNetworkAvailable(this)) {
+            if (FirstTime) {
+                if (isNetworkAvailable(this)) {
                     new DataAsyncTask().execute();
                     sharedPrefrance.setFirstTime(false, sharedPreferences);
-             //   } else {
-
-             //       Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show();
-             //   }
-           /*** } else {
-                Log.i("Ahmed","not First Time");
+                } else {
+                    Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Log.i("Ahmed", "not First Time");
                 new DataAsyncTask().execute();
-            }***/
-
+            }
         }
         catch (Exception e)
         {
@@ -252,18 +258,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(item!=null)
             item.setChecked(false);
     }
-    ////////////data Part
+    ////////////////////////////////////////////////////////////data Part
 
 
-    class DataAsyncTask extends AsyncTask <Cursor,Void,Cursor>
+    class DataAsyncTask extends AsyncTask <Void,Void,Cursor>
     {
         private URL url;
         private String Json_Link = "https://api.myjson.com/bins/ijgo1",Json_String;
         private HttpsURLConnection httpsURLConnection;
         private JSONArray jsonArray,monuments;
         private JSONObject jsonObject,jsonObject2;
+        int x;
         @Override
-        protected Cursor doInBackground(Cursor... eVoid) {
+        protected Cursor doInBackground(Void... eVoid) {
             try {
                 if (FirstTime) {
                     return getData();
@@ -281,9 +288,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(Cursor cursor) {
-            cursor.moveToFirst();
-            String s=getString(cursor.getColumnIndexOrThrow(Contract.Column_Photo_Cities));
-            Toast.makeText(MainActivity.this,s,Toast.LENGTH_SHORT).show();
+            try {
+                cursor.moveToFirst();
+                String s = cursor.getString(cursor.getColumnIndexOrThrow(Contract.Column_Photo_Cities));
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e)
+            {
+                Log.i("Ahmed","On Post Execute "+ e.getMessage());
+            }
         }
 
         private Cursor getData ()
@@ -305,20 +318,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         contentValues.put(Contract.Column_Name_Cities_En, jsonObject.getString("name_En"));
                         contentValues.put(Contract.Column_Name_Cities_Ar, jsonObject.getString("name_Ar"));
                         contentValues.put(Contract.Column_Info_Cities_En, jsonObject.getString("info_En"));
-                        contentValues.put(Contract.Column_Info_Cities_En, jsonObject.getString("info_Ar"));
-                        File my_folder = getExternalFilesDir("Enjoy_Egypt");
-                        File file = new File(my_folder, jsonObject.getString("name_En") + ".jpg");
-                        InputStream inputStream1 = new BufferedInputStream(new URL(jsonObject.getString("photo")).openStream());
-                        FileOutputStream outputStream = new FileOutputStream(file);
-                        byte[] data = new byte[1024];
-                        int count = 0;
-                        while ((count=inputStream1.read(data)) != 1) {
-                            outputStream.write(data, 0, count);
-                        }
-                        inputStream1.close();
-                        outputStream.close();
+                        contentValues.put(Contract.Column_Info_Cities_Ar, jsonObject.getString("info_Ar"));
+                        x=1;
+                        new DownloadImage().execute(jsonObject.getString("photo"));
                         contentValues.put(Contract.Column_Photo_Cities, jsonObject.getString("name_En") + ".jpg");
-                        getContentResolver().insert(Uri.parse(Contract.Table_Cities_Name), contentValues);
+                        getContentResolver().insert(Uri.parse(Contract.Table_Uri_Cities), contentValues);
                     }
                     catch (Exception e)
                     {
@@ -328,8 +332,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     monuments=jsonObject.getJSONArray("Monuments");
                     for (int j=0;j<monuments.length();j++)
                     {
-                        jsonObject2=monuments.getJSONObject(j);
                         //insert the data in the second table of monuments
+                        jsonObject2=monuments.getJSONObject(j);
+                        ContentValues contentValues2 = new ContentValues();
+                        contentValues2.put(Contract.Column_Name_Monuments_En, jsonObject2.getString("name_En"));
+                        contentValues2.put(Contract.Column_Name_Monuments_Ar, jsonObject2.getString("name_Ar"));
+                        contentValues2.put(Contract.Column_Info_Monuments_En, jsonObject2.getString("info_En"));
+                        contentValues2.put(Contract.Column_Info_Monuments_Ar, jsonObject2.getString("info_Ar"));
+                        contentValues2.put(Contract.Column_Prize_En_Monuments, jsonObject2.getString("prize_Am"));
+                        contentValues2.put(Contract.Column_Prize_Ar_Monuments, jsonObject2.getString("prize_Eg"));
+                        contentValues2.put(Contract.Column_City_Name_Monuments, jsonObject.getString("name_En"));
+                        contentValues2.put(Contract.Column_Photo_Monuments, jsonObject2.getString("name_En") + ".jpg");
+                        x=2;
+                        new DownloadImage().execute(jsonObject2.getString("photo"));
+                        getContentResolver().insert(Uri.parse(Contract.Table_Uri_Monuments), contentValues2);
                     }
                 }
                 inputStream.close();
@@ -357,11 +373,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             return null;
         }
+
+        private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... URL) {
+
+                String imageURL = URL[0];
+
+                Bitmap bitmap = null;
+                try {
+                    // Download Image from URL
+                    InputStream input = new java.net.URL(imageURL).openStream();
+                    // Decode Bitmap
+                    bitmap = BitmapFactory.decodeStream(input);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected void onPostExecute(Bitmap result) {
+                // Set the bitmap into ImageView
+                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+                result.compress(Bitmap.CompressFormat.PNG, 60, bytearrayoutputstream);
+                File folder = getExternalFilesDir("Images");
+                File file= null;
+                try
+                {
+                    if (x==1)
+                        file = new File(folder,jsonObject.getString("name_En")+".jpg");
+                    else
+                        file = new File(folder,jsonObject2.getString("name_En")+".jpg");
+                } catch (JSONException e) {
+                    Log.i("Ahmed","photo download"+e.getMessage());
+                }
+                try
+
+                {
+                    file.createNewFile();
+
+                    FileOutputStream fileoutputstream = new FileOutputStream(file);
+
+                    fileoutputstream.write(bytearrayoutputstream.toByteArray());
+
+                    fileoutputstream.close();
+
+                }
+                catch (Exception e)
+
+                {
+
+                    Log.i("Ahmed",e.getMessage());
+
+                }
+            }
+        }
+
     }
 
+    ////////////////////////////////////////////////////////////////data part
     public boolean isNetworkAvailable(Context context) {
         //boolean function to check the internet connection
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
+
+
 }
