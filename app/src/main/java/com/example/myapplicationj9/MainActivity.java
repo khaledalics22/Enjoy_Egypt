@@ -1,29 +1,24 @@
 package com.example.myapplicationj9;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 
 import com.example.myapplicationj9.Data.Contract;
-import com.example.myapplicationj9.Data.NetworkData;
 import com.example.myapplicationj9.Data.SharedPrefrance;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.fragment.app.FragmentManager;
-import androidx.loader.content.AsyncTaskLoader;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,13 +34,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+<<<<<<< HEAD
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+=======
+import android.widget.Toast;
+
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Scanner;
+
+import javax.net.ssl.HttpsURLConnection;
+>>>>>>> 61079e22dbd298f5fff4e91fdcc265ab635cb19a
 
 import java.util.ArrayList;
 import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,MainAdapter.openDetailOfSight {
 
@@ -60,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////
     private AppBarConfiguration mAppBarConfiguration;
     NavigationView navigationView ;
+    boolean FirstTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,34 +82,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 ////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////Data Part
-        SharedPreferences sharedPreferences=getSharedPreferences(Contract.SharedPrefrances,MODE_PRIVATE);
-        SharedPrefrance sharedPrefrance = new SharedPrefrance(sharedPreferences);
-        boolean FirstTime = sharedPrefrance.isFirstTime();
-        if(isNetworkAvailable(this))
-        {
-            if (FirstTime)
-            {
+        try {
+            SharedPreferences sharedPreferences = getSharedPreferences(Contract.SharedPrefrances, MODE_PRIVATE);
+            SharedPrefrance sharedPrefrance = new SharedPrefrance(sharedPreferences);
+            Cursor data=null;
+            String Language;
+            FirstTime = sharedPrefrance.isFirstTime();
+            Language = sharedPrefrance.getLanguage();
+            //if (FirstTime) {
+            //    if (isNetworkAvailable(this)) {
+                    new DataAsyncTask().execute();
+                    sharedPrefrance.setFirstTime(false, sharedPreferences);
+             //   } else {
 
-            }
-            else
-            {
-
-            }
-
-        }
-        else
-        {
-            if (FirstTime)
-            {
-
-            }
-            else
-            {
-
-            }
+             //       Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show();
+             //   }
+           /*** } else {
+                Log.i("Ahmed","not First Time");
+                new DataAsyncTask().execute();
+            }***/
 
         }
-        new DataAsyncTask().execute();
+        catch (Exception e)
+        {
+            Log.i("Ahmed",e.getMessage());
+        }
+
+
+
+
 
 
 
@@ -108,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ;
+       
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -343,12 +358,106 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////data Part
 
 
-    class DataAsyncTask extends AsyncTask <Void,Void,Void>
+    class DataAsyncTask extends AsyncTask <Cursor,Void,Cursor>
     {
+        private URL url;
+        private String Json_Link = "https://api.myjson.com/bins/ijgo1",Json_String;
+        private HttpsURLConnection httpsURLConnection;
+        private JSONArray jsonArray,monuments;
+        private JSONObject jsonObject,jsonObject2;
+        @Override
+        protected Cursor doInBackground(Cursor... eVoid) {
+            try {
+                if (FirstTime) {
+                    return getData();
+                }
+                else {
+                    return LoadData();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.i("Ahmed","DO in BackGround" +e.getMessage());
+            }
+            return null;
+        }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            new NetworkData(getContentResolver()).getData();
+        protected void onPostExecute(Cursor cursor) {
+            cursor.moveToFirst();
+            String s=getString(cursor.getColumnIndexOrThrow(Contract.Column_Photo_Cities));
+            Toast.makeText(MainActivity.this,s,Toast.LENGTH_SHORT).show();
+        }
+
+        private Cursor getData ()
+        {
+            try{
+                url = new URL (Json_Link);
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                httpsURLConnection.setRequestMethod("GET");
+                InputStream inputStream=httpsURLConnection.getInputStream();
+                Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
+                Json_String = scanner.hasNext() ? scanner.next() : "";
+                jsonArray = new JSONArray(Json_String);
+
+                for (int i=0;i<jsonArray.length();i++)
+                {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(Contract.Column_Name_Cities_En, jsonObject.getString("name_En"));
+                        contentValues.put(Contract.Column_Name_Cities_Ar, jsonObject.getString("name_Ar"));
+                        contentValues.put(Contract.Column_Info_Cities_En, jsonObject.getString("info_En"));
+                        contentValues.put(Contract.Column_Info_Cities_En, jsonObject.getString("info_Ar"));
+                        File my_folder = getExternalFilesDir("Enjoy_Egypt");
+                        File file = new File(my_folder, jsonObject.getString("name_En") + ".jpg");
+                        InputStream inputStream1 = new BufferedInputStream(new URL(jsonObject.getString("photo")).openStream());
+                        FileOutputStream outputStream = new FileOutputStream(file);
+                        byte[] data = new byte[1024];
+                        int count = 0;
+                        while ((count=inputStream1.read(data)) != 1) {
+                            outputStream.write(data, 0, count);
+                        }
+                        inputStream1.close();
+                        outputStream.close();
+                        contentValues.put(Contract.Column_Photo_Cities, jsonObject.getString("name_En") + ".jpg");
+                        getContentResolver().insert(Uri.parse(Contract.Table_Cities_Name), contentValues);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.i("Ahmed","inside GetData" + e.getMessage());
+
+                    }
+                    monuments=jsonObject.getJSONArray("Monuments");
+                    for (int j=0;j<monuments.length();j++)
+                    {
+                        jsonObject2=monuments.getJSONObject(j);
+                        //insert the data in the second table of monuments
+                    }
+                }
+                inputStream.close();
+                httpsURLConnection.disconnect();
+            }
+            catch (Exception e)
+            {
+                Log.i("Ahmed","GetData \n" +e.getMessage());
+            }
+
+            return LoadData();
+        }
+
+        private Cursor LoadData ()
+        {
+            try {
+                return getContentResolver().query(Uri.parse(Contract.Table_Uri_Cities),null,null,null,null);
+            }
+            catch (Exception e)
+            {
+                Log.i("Ahmed","Load Data" + e.getMessage());
+            }
+
+
+
             return null;
         }
     }

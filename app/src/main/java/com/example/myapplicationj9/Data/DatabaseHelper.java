@@ -13,9 +13,9 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Database_Name = "Egypt.db";
     private static final String Create_Method_Cities = "CREATE TABLE " + Contract.Table_Cities_Name + "("
-            + Contract.Column_Name_Cities_En + " STRING," + Contract.Column_Photo_Cities + " INTEGER," +
-            Contract.Column_Info_Cities_En + " STRING ," + Contract.Column_Name_Cities_Ar + " STRING,"  +
-            Contract.Column_Info_Cities_Ar + " STRING )";
+            + Contract.Column_Name_Cities_En + " TEXT," + Contract.Column_Photo_Cities + " TEXT," +
+            Contract.Column_Info_Cities_En + " TEXT ," + Contract.Column_Name_Cities_Ar + " TEXT,"  +
+            Contract.Column_Info_Cities_Ar + " TEXT)";
     private static final String Drop_Table_Cities ="DROP IF EXISTS " +Contract.Table_Cities_Name ;
 
     public DatabaseHelper(Context context ) {
