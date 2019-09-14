@@ -9,6 +9,11 @@ public class Sight {
     private String cordinates;
     private int ImageSrcId;
     private ArrayList<Content> contents;
+    private String videoPath;
+
+    public String getVideoPath() {
+        return videoPath;
+    }
 
     public ArrayList<Content> getContents() {
         return contents;
@@ -41,6 +46,8 @@ public class Sight {
         this.details = details;
         this.cordinates = cordinates;
         ImageSrcId = imageSrcId;
+        videoPath= "android.resource://com.example.myapplicationj9/"+R.raw.cairo_tower;
+
     }
 
     public Sight(String name, String details, String cordinates,int imageSrcId,ArrayList<Content> contents) {
@@ -50,6 +57,8 @@ public class Sight {
         ImageSrcId = imageSrcId;
         this.contents = contents;
         this.comments = comments;
+        videoPath = "android.resource://com.example.myapplicationj9/"+R.raw.cairo_tower;
+
     }
 
     public void setName(String name) {
@@ -80,5 +89,7 @@ public class Sight {
         this.name = name;
         this.details = details;
         this.cordinates = cordinates;
+        videoPath= "android.resource://com.example.myapplicationj9/"+R.raw.cairo_tower;
+
     }
 }

@@ -27,6 +27,7 @@ public class sight_frag extends Fragment {
         super.onAttach(context);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -23,10 +23,11 @@ public class detail_frag extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-    }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
