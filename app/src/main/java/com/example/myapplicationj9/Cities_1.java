@@ -31,6 +31,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     ImageView ivRate1;
     Button btnOpenMap;
     ImageView iv_main_image;
+    public static Sight openSight=null;
 
     private int cityIndex;
     private int sightIndex;
@@ -63,6 +64,36 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
                 .hide(manager.findFragmentById(R.id.detail_frag))
                 .hide(manager.findFragmentById(R.id.sight_frag))
                 .commit();
+        if(openSight!=null)
+        {
+            manager.beginTransaction()
+                    .hide(manager.findFragmentById(R.id.list_frag))
+                    .hide(manager.findFragmentById(R.id.detail_frag))
+                    .show(manager.findFragmentById(R.id.sight_frag))
+                    .commit();
+            setSightsViews();
+            setSightslistener();
+
+            String name=openSight.getName();
+            tv_Name.setText(openSight.getName());
+            tv_Detail.setText(openSight.getDetails());
+            iv_main_image.setImageResource(openSight.getImageSrcId());
+            ArrayList<Comment> comments=openSight.getComments();
+
+
+            commentAdapter=new CommentAdapter(comments);
+            layoutManagerComment= new LinearLayoutManager(this);
+            recyclerViewComment.setLayoutManager(layoutManagerComment);
+            recyclerViewComment.setHasFixedSize(true);
+            recyclerViewComment.setAdapter(commentAdapter);
+
+            contentAdapter=new ContentAdapter(this,openSight.getContents());
+            layoutManagerContent = new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false);
+            recyclerViewContent.setHasFixedSize(true);
+            recyclerViewContent.setLayoutManager(layoutManagerContent);
+            recyclerViewContent.setAdapter(contentAdapter);
+
+        }
 
     }
 
@@ -401,5 +432,11 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        openSight=null; 
     }
 }

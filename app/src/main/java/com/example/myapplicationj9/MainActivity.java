@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -289,27 +290,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     @Override
     public void openDetailsListener(Sight sight) {
 
+        Cities_1.openSight=sight;
+        startActivity(new Intent(this,Cities_1.class));
         // open the frag of sights
 
     }
