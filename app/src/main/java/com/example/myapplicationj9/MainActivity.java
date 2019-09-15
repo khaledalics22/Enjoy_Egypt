@@ -1,7 +1,6 @@
 package com.example.myapplicationj9;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -43,25 +42,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.Toast;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,MainAdapter.openDetailOfSight {
@@ -209,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new MainAdapter(this,cities.get(0).getSights());
+        adapter=new MainAdapter(this,cities.get(new Random().nextInt(cities.size())).getSights());
         recyclerView.setAdapter(adapter);
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -295,7 +292,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void openDetailsListener(Sight sight) {
 
-        Cities_1.openSight=sight;
+        Cities_1.currSight =sight;
+
         startActivity(new Intent(this,Cities_1.class));
         // open the frag of sights
 

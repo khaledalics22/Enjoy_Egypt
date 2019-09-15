@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.media.MediaController2;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.ArrayList;
 
-public class Cities_1 extends AppCompatActivity implements list_fragment.listItem,sightsAdapter.SightSelected{
+public class Cities_1 extends AppCompatActivity implements list_fragment.listItem,sightsAdapter.SightSelected,sight_frag.stopVideoInterface{
     ActionBar actionBar;
     TextView tv_Detail;
     TextView tv_Name;
@@ -35,8 +32,10 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     ImageView ivRate1;
     Button btnOpenMap;
     ImageView iv_main_image;
+    TextView tv_openCityOfSight;
     ImageView ivPlayVideo;
-    public static Sight openSight=null;
+    public static Sight currSight =null;
+    public static int currCityIndex=-1;
 
     private int cityIndex;
     private int sightIndex;
@@ -61,28 +60,40 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
 
     public void playVideo(String path) {
         if(path==null)return;
-        m= new MediaController(this);
+
         if(videoView!=null&&videoView.isPlaying())
         {
         }
         else if(videoView!=null&&!videoView.isPlaying())
         {
             videoView.start();
-
         }
         else {
             videoView=findViewById(R.id.video_sight);
             videoView.setVideoURI(Uri.parse(path));
-            videoView.setMediaController(m);
-            m.setAnchorView(videoView);
             videoView.requestFocus();
             videoView.start();
             videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     ivPlayVideo.setVisibility(View.VISIBLE);
+                    videoView.clearFocus();
                 }
             });
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                        @Override
+                        public void onVideoSizeChanged(MediaPlayer mediaPlayer, int i, int i1) {
+                            m= new MediaController(Cities_1.this);
+                            videoView.setMediaController(m);
+                            m.setAnchorView(videoView);
+                        }
+                    });
+                }
+            });
+
         }
     }
 
@@ -101,7 +112,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
                 .hide(manager.findFragmentById(R.id.detail_frag))
                 .hide(manager.findFragmentById(R.id.sight_frag))
                 .commit();
-        if(openSight!=null)
+        if(currSight !=null)
         {
             manager.beginTransaction()
                     .hide(manager.findFragmentById(R.id.list_frag))
@@ -114,16 +125,16 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
             ivPlayVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    playVideo(openSight.getVideoPath());
+                    ivPlayVideo.setVisibility(View.INVISIBLE);
+                    playVideo(currSight.getVideoPath());
                 }
             });
 
-            String name=openSight.getName();
-            tv_Name.setText(openSight.getName());
-            tv_Detail.setText(openSight.getDetails());
-            iv_main_image.setImageResource(openSight.getImageSrcId());
-
-            ArrayList<Comment> comments=openSight.getComments();
+            String name= currSight.getName();
+            tv_Name.setText(currSight.getName());
+            tv_Detail.setText(currSight.getDetails());
+            iv_main_image.setImageResource(currSight.getImageSrcId());
+            ArrayList<Comment> comments= currSight.getComments();
 
 
             commentAdapter=new CommentAdapter(comments);
@@ -132,12 +143,22 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
             recyclerViewComment.setHasFixedSize(true);
             recyclerViewComment.setAdapter(commentAdapter);
 
-            contentAdapter=new ContentAdapter(this,openSight.getContents());
+            contentAdapter=new ContentAdapter(this, currSight.getContents());
             layoutManagerContent = new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false);
             recyclerViewContent.setHasFixedSize(true);
             recyclerViewContent.setLayoutManager(layoutManagerContent);
             recyclerViewContent.setAdapter(contentAdapter);
 
+        }
+
+    }
+
+    @Override
+    public void stopVideo() {
+        if(videoView!=null) {
+            videoView.stopPlayback();
+            videoView=null;
+            ivPlayVideo.setVisibility(View.VISIBLE);
         }
 
     }
@@ -161,6 +182,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
 
     }
     void setSightsViews(){
+        tv_openCityOfSight=findViewById(R.id.tv_city_of_sight);
         iv_main_image =findViewById(R.id.iv_sight_image);
         btnOpenMap=findViewById(R.id.btn_take_me_there_sight);
         showLess=findViewById(R.id.show_less_sight);
@@ -198,18 +220,18 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
                 .commit();
         setSightsViews();
         setSightslistener();
-
         String name=sight.getName();
         tv_Name.setText(sight.getName());
         tv_Detail.setText(sight.getDetails());
         iv_main_image.setImageResource(sight.getImageSrcId());
-       ivPlayVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ivPlayVideo.setVisibility(View.INVISIBLE);
-                playVideo(sight.getVideoPath());
-            }
-        });
+        tv_openCityOfSight.setText(list_fragment.cities.get(currCityIndex).getName());
+           ivPlayVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ivPlayVideo.setVisibility(View.INVISIBLE);
+                    playVideo(sight.getVideoPath());
+                }
+            });
 
         ArrayList<Comment> comments=sight.getComments();
 
@@ -248,12 +270,11 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
 
         setCitiesViews();
         setCitieslistener();
+        currCityIndex=index;
         tv_Name.setText(currCity.getName());
         tv_Detail.setText(currCity.getDetails());
         iv_main_image.setImageResource(currCity.getImageSrcID());
         ArrayList<Comment> comments=currCity.getComments();
-
-
         commentAdapter=new CommentAdapter(comments);
         recyclerViewComment.setHasFixedSize(true);
         layoutManagerComment= new LinearLayoutManager(this);
@@ -387,6 +408,13 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     void setSightslistener()
     {
 
+        tv_openCityOfSight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(currCityIndex>=0)
+                    onItemSelected(currCityIndex);
+            }
+        });
         iv_main_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -502,6 +530,8 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     @Override
     protected void onStop() {
         super.onStop();
-        openSight=null;
+        currSight =null;
+        currCityIndex=-1;
+        stopVideo();
     }
 }

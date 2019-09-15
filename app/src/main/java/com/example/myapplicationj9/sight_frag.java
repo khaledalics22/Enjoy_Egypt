@@ -25,6 +25,19 @@ public class sight_frag extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        activity=(stopVideoInterface)context;
+    }
+
+    stopVideoInterface activity;
+    public  interface stopVideoInterface{
+        void stopVideo();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden)
+            activity.stopVideo();
     }
 
 
