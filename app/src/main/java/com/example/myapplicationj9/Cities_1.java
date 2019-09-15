@@ -31,6 +31,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     ImageView ivRate2;
     ImageView ivRate1;
     Button btnOpenMap;
+    TextView tv_distanceCity;
     ImageView iv_main_image;
     TextView tv_openCityOfSight;
     ImageView ivPlayVideo;
@@ -96,12 +97,25 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
 
         }
     }
+    public static double distFrom(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double dist = (float) (earthRadius * c/1000); //in km
 
+        return dist;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cities_1);
+
+        double theta=3.5;
 
         actionBar=getSupportActionBar();
         if(actionBar!=null)
@@ -164,7 +178,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
     }
 
     void setCitiesViews(){
-
+        tv_distanceCity=findViewById(R.id.tv_distance_city);
         iv_main_image =findViewById(R.id.iv_city_image);
         btnOpenMap=findViewById(R.id.btn_take_me_there);
         showLess=findViewById(R.id.show_less);
@@ -274,6 +288,7 @@ public class Cities_1 extends AppCompatActivity implements list_fragment.listIte
         tv_Name.setText(currCity.getName());
         tv_Detail.setText(currCity.getDetails());
         iv_main_image.setImageResource(currCity.getImageSrcID());
+        tv_distanceCity.setText("Distance: "+currCity.getDistance()+"  km");
         ArrayList<Comment> comments=currCity.getComments();
         commentAdapter=new CommentAdapter(comments);
         recyclerViewComment.setHasFixedSize(true);

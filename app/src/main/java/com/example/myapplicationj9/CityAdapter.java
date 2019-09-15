@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,13 @@ public class CityAdapter extends ArrayAdapter<City> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         City currCity=getItem(position);
+        City fromCity=getItem(0);
         if(convertView==null)
         {
             convertView= LayoutInflater.from(getContext()).inflate(R.layout.list_item_city,parent,false);
         }
+        //assume current city is cairo we will measure all distance to it
+
         ImageView imageView=convertView.findViewById(R.id.iv_list_item);
         TextView  cityName=convertView.findViewById(R.id.tv_city_name_list);
         TextView  distance=convertView.findViewById(R.id.tv_distance);
@@ -38,7 +42,9 @@ public class CityAdapter extends ArrayAdapter<City> {
         
         imageView.setImageResource(currCity.getImageSrcID());
         cityName.setText(currCity.getName());
-        distance.setText(""+currCity.getDistance());
+        double dist=Cities_1.distFrom(fromCity.getLat(),fromCity.getLng(),currCity.getLat(),currCity.getLng());
+        currCity.setDistance((int)dist);
+        distance.setText(new DecimalFormat("##.###").format(dist));
         distanceUnit.setText(currCity.getDistanceUnit());
         ArrayList<Sight> sightsArray=currCity.getSights();
         String sightsString="";

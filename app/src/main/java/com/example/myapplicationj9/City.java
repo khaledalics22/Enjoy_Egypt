@@ -5,11 +5,30 @@ import java.util.ArrayList;
 public class City {
     private String name;
     private ArrayList<Sight> sights;
-    private int distance;
+    private int distance=0;
     private int ImageSrcID;
     private String distanceUnit;
     private ArrayList<Comment> comments;
     private String Details;
+    private double lat=0;
+    private double lng=0;
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
     private  ArrayList<String>Rate;
     public String getDetails() {
         return Details;
@@ -81,6 +100,16 @@ public class City {
         ImageSrcID = imageSrcID;
         this.distanceUnit = distanceUnit;
         this.comments = new ArrayList<>();
+    }
+    public City(String name, ArrayList<Sight> sights, int distance, String distanceUnit, int imageSrcID,double lat,double lng) {
+        this.name = name;
+        this.sights = sights;
+        this.distance = distance;
+        ImageSrcID = imageSrcID;
+        this.distanceUnit = distanceUnit;
+        this.comments = new ArrayList<>();
+        this.lat=lat;
+        this.lng=lng;
     }
     public int getImageSrcID() {
         return ImageSrcID;
