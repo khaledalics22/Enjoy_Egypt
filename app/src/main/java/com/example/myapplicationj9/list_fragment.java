@@ -82,10 +82,10 @@ public class list_fragment extends ListFragment {
                 "poiesfujewj;aflsdp[fesdoplesaop" +
                 "aepfioeparosd9[fopneasd9poasdofla"));
 
-        cities.get(0).setLat(31.21564);
-        cities.get(0).setLng(29.95527);
+        cities.get(0).setLat(30.06263);
+        cities.get(0).setLng(31.24967);
         cities.add(new City("Alex",sights,3,"km",R.drawable.m3,29.97371 ,32.52627));
-        cities.add(new City("Cairo",sights,3,"km",R.drawable.m2,31.21564 ,29.95527));
+        cities.add(new City("Cairo",sights,3,"km",R.drawable.m2,30.06263  ,31.24967));
         cities.add(new City("Al-Fayyuum",sights,3,"km",R.drawable.m4,29.30995 ,30.8418));
         cities.add(new City("Sohag",sights,3,"km",R.drawable.m1,26.55695 ,31.69478));
         cities.add(new City("Asyut",sights,3,"km",R.drawable.m2,27.18096 ,31.18368));
