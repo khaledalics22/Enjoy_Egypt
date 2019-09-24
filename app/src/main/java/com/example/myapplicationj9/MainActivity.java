@@ -1,10 +1,12 @@
 package com.example.myapplicationj9;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,21 +20,33 @@ import com.example.myapplicationj9.Data.Contract;
 import com.example.myapplicationj9.Data.SharedPrefrance;
 
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +67,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -72,10 +87,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ///////////////
     Spinner type;
+////////////////////////////////////////////
 
-
-
-    //////////////////////
+/////////////////////////////////////////////////////
     private AppBarConfiguration mAppBarConfiguration;
     NavigationView navigationView ;
     static boolean FirstTime;
@@ -206,8 +220,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+//////////////////////////////////////////////////
+
+////////////////////////////////////////////////
         adapter=new MainAdapter(this,cities.get(new Random().nextInt(cities.size())).getSights());
         recyclerView.setAdapter(adapter);
+
+
+
+
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         //NavigationUI.setupWithNavController(navigationView, navController);
@@ -287,8 +308,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-    }
 
+
+
+
+
+    }
+    ////////////////////////////////**************/////////////////////////////////
+    ///////////////****************//////
+
+////////////////////////////////******************///////////////////////////
     @Override
     public void openDetailsListener(Sight sight) {
 
@@ -318,6 +347,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 email.putExtra(Intent.EXTRA_TEXT, "I have a problem with: ");
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                return true;
+            case R.id.near:
+                startActivity(new Intent(this,CurrentLocationNearByPlacesActivity.class));
                 return true;
             default:
                 return false;

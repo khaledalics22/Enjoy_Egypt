@@ -16,7 +16,10 @@ import java.util.ArrayList;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     ArrayList<Sight> sights;
+//////////////////////////////
 
+
+///////////////////////
     public MainAdapter(Context context, ArrayList<Sight> sights) {
         this.sights = sights;
         activity=(openDetailOfSight)context;
@@ -61,8 +64,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         View v=LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item,parent,false);
 
-
-
         return new ViewHolder(v);
     }
 
@@ -73,10 +74,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.caption.setText(currSight.getDetails());
         holder.iv_sight_image.setImageResource(currSight.getImageSrcId());
         holder.sightName.setText(currSight.getName());
+        
     }
+
 
     @Override
     public int getItemCount() {
         return sights.size();
     }
+
+
 }

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,7 @@
         android:roundIcon="@drawable/iconenjoyegypt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.Type"></activity>
+        <activity android:name=".CurrentLocationNearByPlacesActivity"></activity>
         <activity
             android:name=".Cities_1"
             android:label="Cities"
@@ -33,10 +34,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
-            android:authorities="com.example.myapplicationj9"
             android:name=".Data.CitiesProvider"
-            android:exported="false"/>
+            android:authorities="com.example.myapplicationj9"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5TmkAw6RECHUKneAHBbth3VuhGntM3UI" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
