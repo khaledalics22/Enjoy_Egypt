@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/iconenjoyegypt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CurrentLocationNearByPlacesActivity"></activity>
+        <activity android:name=".CurrentLocationNearByPlacesActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Cities_1"
             android:label="Cities"

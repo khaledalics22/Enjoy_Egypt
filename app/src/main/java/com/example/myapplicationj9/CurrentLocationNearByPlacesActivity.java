@@ -46,7 +46,7 @@ public class CurrentLocationNearByPlacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_location_near_by_places);
 
-        Toolbar tb = findViewById(R.id.toolbar);
+        androidx.appcompat.widget.Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         recyclerView = findViewById(R.id.places_lst);
         recyclerView.setHasFixedSize(true);
